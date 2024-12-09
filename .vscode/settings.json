@@ -1,8 +1,9 @@
 {
     "java.project.sourcePaths": [
       "src",
+      "03",
       "02",
-      "03"
+      "FahrkartenAutomat"
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
