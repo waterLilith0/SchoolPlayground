@@ -1,4 +1,9 @@
-// Miriam Fix
+/**
+ * Fahrkartenautomat Übungsprojekt
+ * @author Miriam Fix (FI-B 46)
+ * @version A2.6 Fahrkartenautomat kommentieren
+ * A4.3: Ticketgrenzen im Fahrkartenautomat 
+ */
 
 import java.util.Scanner;
 
@@ -21,6 +26,10 @@ class Fahrkartenautomat {
     // Menge eingeben
     System.out.println("Menge der Tickets: ");
     menge = tastatur.nextInt();
+    if (menge > 10  || menge <= 0) {
+      System.out.println("Fehler! Anzahl Tickets nicht zwischen 1 und 10. Anzahl auszugebender Tickets wurde automatisch auf \"1\" gesetzt");
+      menge = 1;
+    }
 
 		// Geldeinwurf
 		eingezahlterGesamtbetrag = 0.0;

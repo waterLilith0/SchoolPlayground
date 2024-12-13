@@ -1,3 +1,5 @@
+// Miriam Fix
+
 import java.util.Scanner;
 
 public class A424_Schaltjahr {
@@ -5,6 +7,6 @@ public class A424_Schaltjahr {
     int year;
     Scanner input = new Scanner(System.in);
 
-    
+
   }
 }
