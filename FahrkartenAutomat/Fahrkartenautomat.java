@@ -4,6 +4,7 @@
  * @version A2.6 Fahrkartenautomat kommentieren
  * A4.3: Ticketgrenzen im Fahrkartenautomat
  * A5.3: Wiederholung der Eingabe der Ticketanzahl 
+ * A6.3: Methoden
  */
 
 import java.util.InputMismatchException;
@@ -16,11 +17,28 @@ class Fahrkartenautomat {
 
 		double zuZahlenderBetrag = 0;
 		double eingeworfeneMuenze;
-		double rueckgabebetrag;
+		double rueckgabebetrag = 0;
 		double nochZuZahlen;
     int menge = 0, choice = 0;
 
-		// Geldbetrag eingeben
+    begruessung();
+    zuZahlenderBetrag = fahrkartenbestellungErfassen(tastatur);
+    nochZuZahlen = fahrkartenBezahlen(tastatur, zuZahlenderBetrag);
+    fahrkartenAusgeben();
+    rueckgeldAusgeben(nochZuZahlen);
+		
+		tastatur.close();
+	}
+
+  public static void begruessung() {
+    System.out.println("Herzlich Willkommen!");
+  }
+
+  // Kartenauswahl und Ticketanzahl
+  public static double fahrkartenbestellungErfassen(Scanner tastatur) {
+    int menge = 0, choice = 0;
+    double zuZahlenderBetrag = 0;
+    		// Geldbetrag eingeben
 		System.out.print("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus: ");
     System.out.println("""
                         \n
@@ -68,16 +86,23 @@ class Fahrkartenautomat {
       }
     }
 
+    return zuZahlenderBetrag * menge;
+  }
+
+  public static double fahrkartenBezahlen(Scanner tastatur, double zuZahlenderBetrag) {
 		// Geldeinwurf
-		nochZuZahlen = menge * zuZahlenderBetrag;
+		double nochZuZahlen = zuZahlenderBetrag;
     do { 
       System.out.printf("Noch zu zahlen: %.2f Euro\n", nochZuZahlen);
 			System.out.print("Eingabe (mind. 5 Cent, höchstens 2 Euro): ");
-			eingeworfeneMuenze = tastatur.nextDouble();
+			double eingeworfeneMuenze = tastatur.nextDouble();
 			nochZuZahlen = nochZuZahlen - eingeworfeneMuenze;
     } while (nochZuZahlen > 0);
-		
-		// Fahrscheinausgabe
+    return nochZuZahlen;
+  }
+
+  public static void fahrkartenAusgeben() {
+    		// Fahrscheinausgabe
 		System.out.println("\nFahrschein wird ausgegeben");
 		for (int i = 0; i < 8; i++) {
 			System.out.print("=");
@@ -89,9 +114,12 @@ class Fahrkartenautomat {
 			}
 		}
 		System.out.println("\n\n");
-		
+
+  }
+
+public static void rueckgeldAusgeben(double nochZuZahlen) {
 		// Rückgeldberechnung und -ausgabe
-		rueckgabebetrag = Math.round(nochZuZahlen);
+    double rueckgabebetrag = ((double)Math.round(nochZuZahlen * 100) / 100);
 		if (rueckgabebetrag < 0.0) {
 			System.out.printf("Der Rückgabebetrag in Höhe von %.2f", -rueckgabebetrag);
 			System.out.println(" Euro wird in folgenden Münzen ausgezahlt:");
@@ -127,7 +155,5 @@ class Fahrkartenautomat {
         vor Fahrtantritt entwerten zu lassen!\n\n
         Wir wünschen Ihnen eine gute Fahrt.
         """);
-
-		tastatur.close();
-	}
+}
 }
