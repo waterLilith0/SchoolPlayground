@@ -12,9 +12,9 @@ public class A732_Zahlen {
     
   }
 
-  public static int[][] addMapElement(int map[][]) {
-    int newMap[][] = new [map.length + 1][];
+  // public static int[][] addMapElement(int map[][]) {
+  //   // int newMap[][] = new [map.length + 1][];
 
-    return 0;
-  }
+  //   // return 0;
+  // }
 }

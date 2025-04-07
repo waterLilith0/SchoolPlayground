@@ -17,6 +17,6 @@ class A341_Rechteck {
     // Ausgabe (A)
     System.out.println("Umfang = " + umfang + " cm");
     System.out.println("Flaeche = " + flaeche + " cm^2");
-
+    input.close();
   }
 }
