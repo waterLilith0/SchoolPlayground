@@ -5,6 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "HalterTest",
+      "request": "launch",
+      "mainClass": "HalterTest",
+      "projectName": "SchoolPlayground_2b0d3586"
+    },
+    {
+      "type": "java",
+      "name": "AutoTest",
+      "request": "launch",
+      "mainClass": "AutoTest",
+      "projectName": "SchoolPlayground_2b0d3586"
+    },
+    {
       "type": "jdk",
       "request": "launch",
       "name": "Launch Java App"
