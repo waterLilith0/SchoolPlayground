@@ -102,4 +102,10 @@ public class Raumschiff {
 
     public void zustandRaumschiff() {}
 
+    @Override
+    public String toString() {
+        
+        return "";
+    }
+
   }

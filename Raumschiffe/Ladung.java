@@ -9,7 +9,7 @@ public class Ladung {
   }
 
     public String getBezeichnung() {
-        return bezeichnung;
+      return bezeichnung;
     }
 
     public void setBezeichnung(String bezeichnung) {
