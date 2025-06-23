@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "RaumschiffMain",
+      "request": "launch",
+      "mainClass": "RaumschiffMain",
+      "projectName": "SchoolPlayground_2b0d3586"
+    },
+    {
+      "type": "java",
+      "name": "test",
+      "request": "launch",
+      "mainClass": "test",
+      "projectName": "SchoolPlayground_2b0d3586"
+    },
+    {
+      "type": "java",
       "name": "HalterTest",
       "request": "launch",
       "mainClass": "HalterTest",

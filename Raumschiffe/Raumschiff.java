@@ -80,7 +80,7 @@ public class Raumschiff {
         this.schiffsName = schiffsName;
     }
 
-    public ArrayList getLadungen() {
+    public ArrayList<Ladung> getLadungen() {
         return ladungen;
     }
 
@@ -92,7 +92,14 @@ public class Raumschiff {
         this.ladungen.add(neueLadung);
     }
 
-    public void photonenTorpedoShiessen(Raumschiff r) {}
+    public void photonenTorpedoShiessen(Raumschiff r) {
+        if (photonenTorpedoAnzahl > 0) {
+            photonenTorpedoAnzahl--;
+            System.out.println("Photonentorpedo abgeschossen");
+        } else {
+            System.out.println("-=*Click*=-");
+        }
+    }
   
     public void phaserKanonenSchiessen(Raumschiff r) {}
 
@@ -100,12 +107,14 @@ public class Raumschiff {
 
     public void nachrichtAnAlle(String message) {}
 
-    public void zustandRaumschiff() {}
-
-    @Override
-    public String toString() {
-        
-        return "";
+    public void zustandRaumschiff() {
+      System.out.println("Schiffsname: " + schiffsName +
+              ", Photonentorpedos: " + photonenTorpedoAnzahl +
+              ", Energieversorgung: " + energieversogungInProzent + "%" +
+              ", Schilde: " + schildeInProzent + "%" +
+              ", Hülle: " + huelleInProzent + "%" +
+              ", Lebenserhaltungssysteme: " + lebenserhaltungsSystemeInProzent +
+              ", Androidenanzahl: " + androidenAnzahl);
     }
 
   }

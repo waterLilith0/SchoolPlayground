@@ -1,10 +1,11 @@
 {
     "java.project.sourcePaths": [
+      "Widerholung/Arbeitsvorbereitung",
       "FahrkartenAutomat",
       "07",
       "03",
       "02",
-      "Widerholung/Arbeitsvorbereitung"
+      "Raumschiffe"
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
