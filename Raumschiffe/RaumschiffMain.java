@@ -16,18 +16,13 @@ public class RaumschiffMain {
     Ladung l7 = new Ladung("Photonentorpedo", 3);
 
     ArrayList<Ladung> ladungen = klingonen.getLadungen();
-    ladungen.add(l1);
-    ladungen.add(l5);
-    klingonen.setLadungen(ladungen);
-    ladungen.clear();
-    ladungen.add(l2);
-    ladungen.add(l3);
-    ladungen.add(l6);
-    romulaner.setLadungen(ladungen);
-    ladungen.clear();
-    ladungen.add(l4);
-    ladungen.add(l7);
-    vulkanier.setLadungen(ladungen);
+    klingonen.addLadung(l1);
+    klingonen.addLadung(l5);
+    romulaner.addLadung(l2);
+    romulaner.addLadung(l3);
+    romulaner.addLadung(l6);
+    vulkanier.addLadung(l4);
+    vulkanier.addLadung(l7);
 
   }
 }

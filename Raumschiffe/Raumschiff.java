@@ -1,4 +1,5 @@
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class Raumschiff {
@@ -9,7 +10,8 @@ public class Raumschiff {
   private int lebenserhaltungsSystemeInProzent;
   private int androidenAnzahl;
   private String schiffsName;
-  private ArrayList<Ladung> ladungen;
+  private static ArrayList<String> broadCastKommunikator;
+  private ArrayList<Ladung> ladungsVerzeichnis;
 
   public Raumschiff() {}
 
@@ -21,7 +23,7 @@ public class Raumschiff {
         this.huelleInProzent = huelleInProzent;
         this.lebenserhaltungsSystemeInProzent = lebenserhaltungsSystemeInProzent;
         this.androidenAnzahl = androidenAnzahl;
-        this.ladungen = new ArrayList<>();
+        this.ladungsVerzeichnis = new ArrayList<>();
     }
 
     public int getPhotonenTorpedoAnzahl() {
@@ -80,32 +82,126 @@ public class Raumschiff {
         this.schiffsName = schiffsName;
     }
 
-    public ArrayList<Ladung> getLadungen() {
-        return ladungen;
+    public void entladen(String bezeichnung, int menge) {
+      if (ladungsVerzeichnis == null || ladungsVerzeichnis.isEmpty()) {
+          System.out.println("Das Raumschiff hat keine Ladungen im Verzeichnis.");
+          return;
+      }
+        for (Ladung ladung : ladungsVerzeichnis) {
+            if (ladung.getBezeichnung().equals(bezeichnung)) {
+              if (ladung.getMenge() > menge) {
+                ladung.setMenge(ladung.getMenge() - menge);
+                System.out.println("Die gewünschte Ladung " + ladung.getBezeichnung() + " vom Ladungsverzeichnis konnte entladen werden.");
+              } else {
+                System.out.println("Nur " + ladung.getMenge() + " Ladung " + ladung.getBezeichnung() + " vom Ladungsverzeichnis konnte entladen werden.");
+                ladung.setMenge(0);
+              }
+            }
+            if (ladung.getMenge() == 0) {
+              System.out.println("Es sind keine Einheiten mehr von der Ladung im Raumschiff vorhanden.");
+            } else {
+              System.out.println("Noch "+ ladung.getMenge() + " Einheiten von der Ladung " + ladung.getBezeichnung() + " vorhanden.");
+            }
+          }
+        System.out.println("Die Ladung " + bezeichnung + " ist nicht vorhanden!");
     }
 
-    public void setLadungen(ArrayList ladungen) {
-        this.ladungen = ladungen;
+    public void ladungAusgeben() {
+      for (Ladung ladung : ladungsVerzeichnis) {
+        System.out.println("Bezeichnung: " + ladung.getBezeichnung() + ", Menge: " + ladung.getMenge());
+      }
+    }
+
+    public void ladungAufraeumen() {
+      for (Ladung ladung : ladungsVerzeichnis) {
+        if (ladung.getMenge() <= 0) {
+          ladungsVerzeichnis.remove(ladung);
+        }
+      }
     }
 
     public void addLadung(Ladung neueLadung) {
-        this.ladungen.add(neueLadung);
+        this.ladungsVerzeichnis.add(neueLadung);
     }
 
     public void photonenTorpedoShiessen(Raumschiff r) {
         if (photonenTorpedoAnzahl > 0) {
-            photonenTorpedoAnzahl--;
-            System.out.println("Photonentorpedo abgeschossen");
+          photonenTorpedoAnzahl--;
+          nachrichtAnAlle("Photonentorpedo abgeschossen");
+          treffer(r);
         } else {
-            System.out.println("-=*Click*=-");
+          nachrichtAnAlle("-=*Click*=-");
         }
     }
   
-    public void phaserKanonenSchiessen(Raumschiff r) {}
+    public void phaserKanonenSchiessen(Raumschiff r) {
+      if (energieversogungInProzent > 0) {
+        energieversogungInProzent--;
+        nachrichtAnAlle("Phaserkanonen abgeschossen");
+        treffer(r);
+      } else {
+        nachrichtAnAlle("-=*Click*=-");
+      }
+    }
 
-    private void treffer(Raumschiff r) {}
+    private void treffer(Raumschiff r) {
+      nachrichtAnAlle(r.schiffsName + " wurde getroffen!");
+      r.schildeInProzent -= 50;
+      if (r.schildeInProzent < 0) {
+        r.energieversogungInProzent -= 50;
+        r.huelleInProzent -= 50;
+        if (r.huelleInProzent < 0) {
+          r.lebenserhaltungsSystemeInProzent = 0;
+          System.out.println("Alle Lebenserhaltssysteme abgeschaltet.");
+        }
+      }
+    }
 
-    public void nachrichtAnAlle(String message) {}
+    public void nachrichtAnAlle(String message) {
+      broadCastKommunikator.add(message);
+    }
+
+    public static ArrayList<String> eintraegeLogbuchZurueckgeben() {
+      return broadCastKommunikator;
+    }
+
+    public void photonentorpedosLaden(int anzahlTorpedos) {
+      for (Ladung ladung : ladungsVerzeichnis) {
+        if (ladung.getBezeichnung().equals("Photonentorpedo")) {
+          if (ladung.getMenge() >= anzahlTorpedos) {
+            ladung.setMenge(ladung.getMenge() - anzahlTorpedos);
+            photonenTorpedoAnzahl += anzahlTorpedos;
+            System.out.println(anzahlTorpedos + " Photonentorpedo(s) eingesetzt");
+            return;
+          } else {
+            photonenTorpedoAnzahl += ladung.getMenge();
+            ladungsVerzeichnis.remove(ladung);
+            return;
+          }
+        }
+      }
+      System.out.println("-=*Click*=-");
+    }
+
+    public void reparaturDurchfuehren(boolean schutzschilde, boolean energieversorgung, boolean schiffshuelle, int anzahlDroiden) {
+      int mengeTrue = 0;
+      for (Ladung ladung : ladungsVerzeichnis) {
+          if (true)
+              mengeTrue++;
+      }
+
+      SecureRandom random = new SecureRandom();
+      if (schutzschilde) {
+        int reparaturChance = random.nextInt(0, 101);
+        int prozentRepariert = (reparaturChance * anzahlDroiden) / mengeTrue;
+          if (reparaturChance < 50) {
+            schildeInProzent += 20;
+            System.out.println("Schutzschilde repariert.");
+          } else {
+            System.out.println("Reparatur der Schutzschilde fehlgeschlagen.");
+          }
+      }
+    }
 
     public void zustandRaumschiff() {
       System.out.println("Schiffsname: " + schiffsName +
@@ -117,4 +213,8 @@ public class Raumschiff {
               ", Androidenanzahl: " + androidenAnzahl);
     }
 
+    @Override
+    public String toString() {
+      return "";
+    }
   }
