@@ -184,22 +184,40 @@ public class Raumschiff {
     }
 
     public void reparaturDurchfuehren(boolean schutzschilde, boolean energieversorgung, boolean schiffshuelle, int anzahlDroiden) {
-      int mengeTrue = 0;
-      for (Ladung ladung : ladungsVerzeichnis) {
-          if (true)
-              mengeTrue++;
+      int sumToRepair = 0;
+      if (schutzschilde) {
+        sumToRepair += schildeInProzent;
+      }
+      if (energieversorgung) {
+        sumToRepair += energieversogungInProzent;
+      }
+      if (schiffshuelle) {
+        sumToRepair += huelleInProzent;
       }
 
       SecureRandom random = new SecureRandom();
       if (schutzschilde) {
         int reparaturChance = random.nextInt(0, 101);
-        int prozentRepariert = (reparaturChance * anzahlDroiden) / mengeTrue;
-          if (reparaturChance < 50) {
-            schildeInProzent += 20;
-            System.out.println("Schutzschilde repariert.");
-          } else {
-            System.out.println("Reparatur der Schutzschilde fehlgeschlagen.");
-          }
+        if(anzahlDroiden <= androidenAnzahl) {
+          int prozentRepariert = (reparaturChance * anzahlDroiden) / sumToRepair;
+        } else {
+          int prozentRepariert = (reparaturChance * androidenAnzahl) / sumToRepair;
+        }
+        if (reparaturChance < 50) {
+          schildeInProzent += 20;
+          System.out.println("Schutzschilde repariert.");
+        } else {
+          System.out.println("Reparatur der Schutzschilde fehlgeschlagen.");
+        }
+        if (schutzschilde) {
+        schildeInProzent += sumToRepair;
+        }
+        if (energieversorgung) {
+          energieversogungInProzent += sumToRepair;
+        }
+        if (schiffshuelle) {
+          huelleInProzent += sumToRepair;
+        }
       }
     }
 
@@ -215,6 +233,14 @@ public class Raumschiff {
 
     @Override
     public String toString() {
-      return "";
+      return "Raumschiff{" +
+              "schiffsName='" + schiffsName + '\'' +
+              ", photonenTorpedoAnzahl=" + photonenTorpedoAnzahl +
+              ", energieversogungInProzent=" + energieversogungInProzent +
+              ", schildeInProzent=" + schildeInProzent +
+              ", huelleInProzent=" + huelleInProzent +
+              ", lebenserhaltungsSystemeInProzent=" + lebenserhaltungsSystemeInProzent +
+              ", androidenAnzahl=" + androidenAnzahl +
+              '}';
     }
   }
